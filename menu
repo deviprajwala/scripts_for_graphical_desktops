@@ -1,0 +1,60 @@
+#!/bin/bash
+
+function diskspace
+#this function contains the commands to display the diskspace
+{
+  clear
+  df -k
+}
+
+function whoseon
+#this function contains the commands to display the users logged on
+{
+ clear
+ who
+}
+
+function memusage
+#this function contains the command to view the memory information
+{
+  clear
+  cat /proc/meminfo
+}
+
+function menu
+#this function contains the list of options present in the array
+{
+ clear
+ echo -e "\t\t MENU\n"
+ echo -e "\t 1.Display disk space\n"
+ echo -e "\t 2.Display users\n"
+ echo -e "\t 3.Display memory usage\n"
+ echo -en "\t Enter option"
+ read -n 1 option
+}
+
+while [ 1 ]
+do
+ menu
+ case $option in
+ #cases based on the option entered by the user
+ 0) 
+   break
+   ;;
+ 1)
+   diskspace
+   ;;
+ 2)
+   whoseon
+   ;;
+ 3)
+   memusage
+   ;;
+ *)
+   clear
+   echo "wrong selection"
+   
+ esac
+echo -en "\n\n hit any key to continue"
+read -n 1 line
+done
