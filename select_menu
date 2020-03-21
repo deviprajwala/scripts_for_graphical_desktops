@@ -1,0 +1,44 @@
+#!/bin/bash
+
+function diskspace
+#this function contains the commands to display the diskspace
+{
+  clear
+  df -k
+}
+
+function whoseon
+#this function contains the commands to display the users logged on
+{
+ clear
+ who
+}
+
+function memusage
+#this function contains the command to view the memory information
+{
+  clear
+  cat /proc/meminfo
+}
+
+clear
+PS3="enter option"
+
+select option in "Display disk space" "Display logged on users" "Display memory usage" "exit"
+#select command to create the menu
+do
+  case $option in
+  "exit")
+        break
+        ;;
+  "Display disk space")
+        diskspace
+        ;;
+  "Display logged on users")
+        whoseon
+        ;;
+   "Display memory usage")
+        memusage
+        ;;
+  esac
+done
