@@ -1,0 +1,55 @@
+#!/bin/bash
+#this script illustrates the use of menu widget in zenity
+
+temp1=$(mktemp -t test1.XXX)
+temp2=$(mktemp -t test2.XXX)
+
+function diskspace
+#this function contains the commands to display the diskspace
+{
+  df -k > $temp1
+  zenity --text-info --title "diskspace" --filename=$temp1 --width 200 --height 400
+}
+
+function whoseon
+#this function contains the commands to display the users logged on
+{
+ who > $temp1
+ zenity --text-info --title "whoseon" --filename=$temp1 --width 200 --height 400
+}
+
+function memusage
+#this function contains the command to view the memory information
+{
+  cat /proc/meminfo > $temp1
+  zenity --text-info --title "memusage" --filename=$temp1 --width 200 --height 400
+}
+
+while [ 1 ]
+do
+  zenity --list --radiolist --title "menu" --column "select" --column "menu item" FALSE \
+"Display diskspace" FALSE "Display users" FALSE "Display memory usage" FALSE "Exit" > $temp2
+
+if [ $? -eq 1 ]
+then
+   break
+fi
+
+selection=$(cat $temp2)
+ case $selection in 
+"Display diskspace")    
+diskspace 
+;; 
+"Display users")    
+whoseon 
+;; 
+"Display memory usage")    
+memusage 
+;; 
+"Exit")    
+break 
+;; 
+*)    
+zenity --info "Sorry, invalid selection"
+esac 
+done 
