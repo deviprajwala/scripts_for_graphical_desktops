@@ -1,0 +1,32 @@
+#!/bin/bash
+#this script contains the various forms of dialog widgets
+
+
+temp=$(mktemp -t test.XXX)
+
+#the message box widget
+dialog --title greeting --msgbox "Hello $USER" 10 20
+
+#the yes no widget
+dialog --yesno "please fill in the details" 10 20
+if [ $? -eq 1 ]
+then 
+   exit
+fi
+
+#the input box widget
+dialog --inputbox "Enter name" 10 20 2>file.txt
+echo -e "\n" 2>>file.txt
+dialog --inputbox "Enter age" 10 20 2>>file.txt
+echo -e "\n" 2>>file.txt
+dialog --inputbox "Enter place" 10 20 2>>file.txt
+
+
+#the text box widget
+dialog --textbox /home/devi/desk_graphic/file.txt 40 40
+
+
+#the fselect widget
+dialog --title "select a file" --fselect $HOME/ 10 50 2>>file.txt
+
+#the use of menu widget is in next script
